@@ -234,19 +234,17 @@ Sistema de API de mercado, com dois controllers, ProdutoController e ClienteCont
         "ativo": true
     }
     ```
-- **Resposta de Sucesso (200 OK):**
-  ```json
-  {
-      "id": 1,
-      "nome": "João Carlos da Silva",
-      "cpf": "123.456.789-00",
-      "genero": "Masculino",
-      "dataNascimento": "1980-10-
-
-12",
-"ativo": true
-}
-  ```
+  - **Resposta de Sucesso (200 OK):**
+    ```json
+    {
+        "id": 1,
+        "nome": "João Carlos da Silva",
+        "cpf": "123.456.789-00",
+        "genero": "Masculino",
+        "dataNascimento": "1980-10-12",
+        "ativo": true
+     }
+    ```
 
 ### 5. **DELETE /{id}** - Deletar fisicamente um cliente
 - **Descrição:** Remove fisicamente um cliente do banco de dados.
