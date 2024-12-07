@@ -1,267 +1,159 @@
-Sistema de API de mercado, com dois controllers, ProdutoController e ClienteController
----
-
-## **ProdutoController**
-
-**Base URL:** `http://localhost:8080/produtos`
-
-### 1. **GET /** - Listar todos os produtos ativos
-- **Descrição:** Retorna todos os produtos com o campo `ativo = true`.
-- **Método HTTP:** GET
-- **Exemplo de Requisição no Postman:**
-  - **URL:** `http://localhost:8080/produtos/`
-- **Resposta de Sucesso (200 OK):**
-  ```json
-  [
-      {
-          "id": 1,
-          "nomeProduto": "Arroz Integral",
-          "marca": "Marca Terra",
-          "dataFabricacao": "2023-02-15",
-          "dataValidade": "2024-02-15",
-          "genero": "Alimento",
-          "lote": "102A",
-          "ativo": true
-      },
-      {
-          "id": 2,
-          "nomeProduto": "Leite Desnatado",
-          "marca": "Lácteos Vida",
-          "dataFabricacao": "2023-06-01",
-          "dataValidade": "2024-06-01",
-          "genero": "Bebida",
-          "lote": "325B",
-          "ativo": true
-      }
-  ]
-  ```
-
-### 2. **GET /{id}** - Obter um produto por ID
-- **Descrição:** Retorna os detalhes de um produto específico.
-- **Método HTTP:** GET
-- **Exemplo de Requisição no Postman:**
-  - **URL:** `http://localhost:8080/produtos/1`
-- **Resposta de Sucesso (200 OK):**
-  ```json
-  {
-      "id": 1,
-      "nomeProduto": "Arroz Integral",
-      "marca": "Marca Terra",
-      "dataFabricacao": "2023-02-15",
-      "dataValidade": "2024-02-15",
-      "genero": "Alimento",
-      "lote": "102A",
-      "ativo": true
-  }
-  ```
-- **Resposta de Erro (404 NOT FOUND):**
-  ```json
-  "Produto não encontrado"
-  ```
-
-### 3. **POST /** - Adicionar um novo produto
-- **Descrição:** Adiciona um novo produto à base de dados.
-- **Método HTTP:** POST
-- **Exemplo de Requisição no Postman:**
-  - **URL:** `http://localhost:8080/produtos/`
-  - **Body (JSON):**
-    ```json
-    {
-        "nomeProduto": "Óleo de Soja",
-        "marca": "Saúde Natural",
-        "dataFabricacao": "2023-03-10",
-        "dataValidade": "2024-03-10",
-        "genero": "Alimento",
-        "lote": "451C"
-    }
-    ```
-- **Resposta de Sucesso (201 CREATED):**
-  ```json
-  {
-      "id": 3,
-      "nomeProduto": "Óleo de Soja",
-      "marca": "Saúde Natural",
-      "dataFabricacao": "2023-03-10",
-      "dataValidade": "2024-03-10",
-      "genero": "Alimento",
-      "lote": "451C",
-      "ativo": true
-  }
-  ```
-
-### 4. **PUT /{id}** - Atualizar um produto
-- **Descrição:** Atualiza as informações de um produto específico.
-- **Método HTTP:** PUT
-- **Exemplo de Requisição no Postman:**
-  - **URL:** `http://localhost:8080/produtos/1`
-  - **Body (JSON):**
-    ```json
-    {
-        "nomeProduto": "Arroz Integral Orgânico",
-        "marca": "Marca Terra",
-        "dataFabricacao": "2023-02-15",
-        "dataValidade": "2024-02-15",
-        "genero": "Alimento",
-        "lote": "102A"
-    }
-    ```
-- **Resposta de Sucesso (200 OK):**
-  ```json
-  {
-      "id": 1,
-      "nomeProduto": "Arroz Integral Orgânico",
-      "marca": "Marca Terra",
-      "dataFabricacao": "2023-02-15",
-      "dataValidade": "2024-02-15",
-      "genero": "Alimento",
-      "lote": "102A",
-      "ativo": true
-  }
-  ```
-
-### 5. **DELETE /{id}** - Deletar fisicamente um produto
-- **Descrição:** Remove fisicamente um produto do banco de dados.
-- **Método HTTP:** DELETE
-- **Exemplo de Requisição no Postman:**
-  - **URL:** `http://localhost:8080/produtos/1`
-- **Resposta de Sucesso (200 OK):**
-  ```json
-  "Produto deletado com sucesso"
-  ```
-
-### 6. **DELETE /dl/{id}** - Desativação lógica de um produto
-- **Descrição:** Desativa um produto definindo `ativo` como `false`, sem removê-lo fisicamente.
-- **Método HTTP:** DELETE
-- **Exemplo de Requisição no Postman:**
-  - **URL:** `http://localhost:8080/produtos/dl/1`
-- **Resposta de Sucesso (200 OK):**
-  ```json
-  "Produto desativado logicamente"
-  ```
 
 ---
 
-## **ClienteController**
+# SistemaMercado: Backend System for Inventory and Order Management
 
-**Base URL:** `http://localhost:8080/clientes`
+## Overview
 
-### 1. **GET /** - Listar todos os clientes ativos
-- **Descrição:** Retorna todos os clientes com o campo `ativo = true`.
-- **Método HTTP:** GET
-- **Exemplo de Requisição no Postman:**
-  - **URL:** `http://localhost:8080/clientes/`
-- **Resposta de Sucesso (200 OK):**
-  ```json
-  [
-      {
-          "id": 1,
-          "nome": "João da Silva",
-          "cpf": "123.456.789-00",
-          "genero": "Masculino",
-          "dataNascimento": "1980-10-12",
-          "ativo": true
-      },
-      {
-          "id": 2,
-          "nome": "Maria Oliveira",
-          "cpf": "987.654.321-00",
-          "genero": "Feminino",
-          "dataNascimento": "1992-05-25",
-          "ativo": true
-      }
-  ]
-  ```
+The `SistemaMercado` is a backend application developed in **Java** using the **Spring Boot** framework. It simulates a supermarket management system with a focus on clients, products, and orders. The system is designed with a clean architecture that separates concerns across different layers, ensuring scalability, maintainability, and adherence to best practices.
 
-### 2. **GET /{id}** - Obter um cliente por ID
-- **Descrição:** Retorna os detalhes de um cliente específico.
-- **Método HTTP:** GET
-- **Exemplo de Requisição no Postman:**
-  - **URL:** `http://localhost:8080/clientes/1`
-- **Resposta de Sucesso (200 OK):**
-  ```json
-  {
-      "id": 1,
-      "nome": "João da Silva",
-      "cpf": "123.456.789-00",
-      "genero": "Masculino",
-      "dataNascimento": "1980-10-12",
-      "ativo": true
-  }
-  ```
-- **Resposta de Erro (404 NOT FOUND):**
-  ```json
-  "Cliente não encontrado"
-  ```
+## Project Structure
 
-### 3. **POST /** - Adicionar um novo cliente
-- **Descrição:** Adiciona um novo cliente à base de dados.
-- **Método HTTP:** POST
-- **Exemplo de Requisição no Postman:**
-  - **URL:** `http://localhost:8080/clientes/`
-  - **Body (JSON):**
-    ```json
-    {
-        "nome": "Carlos Alberto",
-        "cpf": "321.654.987-11",
-        "genero": "Masculino",
-        "dataNascimento": "1975-08-15"
-    }
+The project follows a modular architecture organized into packages, each responsible for specific functionality:
+
+```
+br.ufrn.imd.sistemamercado
+├── controllers     // REST Controllers for handling HTTP requests
+├── dto             // Data Transfer Objects for request/response models
+├── exceptions      // Custom exceptions and global error handling
+├── model           // JPA Entities representing database tables
+├── repositories    // Interfaces for data access using Spring Data JPA
+└── services        // Business logic layer
+```
+
+---
+
+## Key Components
+
+### 1. **Controllers**
+
+The `controllers` package contains REST endpoints to expose system functionalities. These controllers are responsible for handling HTTP requests and responses.
+
+- **ClienteController**: Manages clients (creation, retrieval, updating, deletion).
+- **ProdutoController**: Handles product operations (creation, inventory management, logical deletion).
+- **PedidoController**: Deals with orders (CRUD operations, processing).
+
+Each controller interacts with the **service layer** and delegates data access tasks to the **repository layer**.
+
+---
+
+### 2. **DTOs (Data Transfer Objects)**
+
+The `dto` package contains classes used to transfer data between the application layers and the API endpoints.
+
+- **ClienteDTO**: Defines fields required for creating/updating client data.
+- **ProdutoDTO**: Defines fields required for creating/updating product data.
+- **PedidoDTO**: Defines fields required for creating/updating order data.
+
+These DTOs ensure that the internal structure of entities is hidden and API requests/responses are well-defined and consistent.
+
+---
+
+### 3. **Exception Handling**
+
+- **ResourceNotFoundException**: A custom exception thrown when a requested resource (client, product, or order) is not found.
+- **GlobalExceptionHandler**: A centralized error-handling mechanism that captures exceptions thrown across the application and maps them to appropriate HTTP responses (e.g., 404 for resource not found).
+
+---
+
+### 4. **Models (Entities)**
+
+The `model` package contains **JPA entities** that map directly to the application's database tables:
+
+- **ClienteEntity**: Represents a client, including fields like `name`, `CPF`, `gender`, and `active` status.
+- **ProdutoEntity**: Represents a product, with fields for `name`, `quantity`, `price`, and `active` status.
+- **PedidoEntity**: Represents an order, associating clients with products and their quantities.
+
+Each entity is annotated with JPA mappings for seamless integration with the database.
+
+---
+
+### 5. **Repositories**
+
+The `repositories` package contains **Spring Data JPA** interfaces for data access:
+
+- **ClienteRepository**
+- **ProdutoRepository**
+- **PedidoRepository**
+
+These repositories abstract database operations, enabling developers to perform CRUD operations using high-level methods without writing SQL queries.
+
+---
+
+### 6. **Services**
+
+The `services` package contains the business logic for the system. Each service is responsible for implementing specific use cases while coordinating between the controller and repository layers:
+
+- **ClienteService**: Business logic for managing clients, including activation/deactivation.
+- **ProdutoService**: Handles product inventory management and logical deletions.
+- **PedidoService**: Processes orders, including validation of client and product availability.
+
+---
+
+## Functionality
+
+The system provides the following key features:
+
+### **Client Management**
+- Create, update, and retrieve client data.
+- Perform soft deletes (logical deactivation) to maintain historical data.
+
+### **Product Inventory**
+- Manage product details, including stock and price.
+- Support for logical deletion of inactive products.
+
+### **Order Processing**
+- Link orders to specific clients and products.
+- Validate stock availability during order creation.
+
+---
+
+## Technical Highlights
+
+- **Spring Boot**: Framework for building robust and scalable web applications.
+- **Spring Data JPA**: Simplifies database access with built-in repository interfaces.
+- **Jakarta Bean Validation**: Ensures data consistency using annotations like `@Valid`.
+- **Exception Handling**: Centralized error management with custom exceptions and global handlers.
+
+---
+
+## How to Run the Application
+
+1. **Prerequisites**
+  - Java 21+
+  - Maven
+  - MySQL
+
+2. **Steps**
+  - Clone the repository:
+    ```bash
+    git clone <repository-url>
     ```
-- **Resposta de Sucesso (201 CREATED):**
-  ```json
-  {
-      "id": 3,
-      "nome": "Carlos Alberto",
-      "cpf": "321.654.987-11",
-      "genero": "Masculino",
-      "dataNascimento": "1975-08-15",
-      "ativo": true
-  }
-  ```
-
-### 4. **PUT /{id}** - Atualizar um cliente
-- **Descrição:** Atualiza as informações de um cliente específico.
-- **Método HTTP:** PUT
-- **Exemplo de Requisição no Postman:**
-  - **URL:** `http://localhost:8080/clientes/1`
-  - **Body (JSON):**
-    ```json
-    {
-        "nome": "João Carlos da Silva",
-        "cpf": "123.456.789-00",
-        "genero": "Masculino",
-        "dataNascimento": "1980-10-12",
-        "ativo": true
-    }
+  - Navigate to the project directory:
+    ```bash
+    cd sistemamercado
     ```
-  - **Resposta de Sucesso (200 OK):**
-    ```json
-    {
-        "id": 1,
-        "nome": "João Carlos da Silva",
-        "cpf": "123.456.789-00",
-        "genero": "Masculino",
-        "dataNascimento": "1980-10-12",
-        "ativo": true
-     }
-    ```
+  - Configure database settings in `application.properties`.
+  - Build and run the application
+  - Access the API at `http://localhost:8080`.
 
-### 5. **DELETE /{id}** - Deletar fisicamente um cliente
-- **Descrição:** Remove fisicamente um cliente do banco de dados.
-- **Método HTTP:** DELETE
-- **Exemplo de Requisição no Postman:**
-    - **URL:** `http://localhost:8080/clientes/1`
-- **Resposta de Sucesso (200 OK):**
-  ```json
-  "Cliente deletado com sucesso"
-  ```
+---
 
-### 6. **DELETE /dl/{id}** - Desativação lógica de um cliente
-- **Descrição:** Desativa um cliente definindo `ativo` como `false`, sem removê-lo fisicamente.
-- **Método HTTP:** DELETE
-- **Exemplo de Requisição no Postman:**
-  - **URL:** `http://localhost:8080/clientes/dl/1`
-- **Resposta de Sucesso (200 OK):**
-  ```json
-  "Cliente desativado logicamente"
-  ```
+## Example Endpoints
+
+- **Client API**
+  - GET `/clientes/`: Retrieve all active clients.
+  - POST `/clientes/`: Create a new client.
+  - DELETE `/clientes/dl/{id}`: Soft-delete a client.
+
+- **Product API**
+  - GET `/produtos/`: Retrieve all active products.
+  - PUT `/produtos/{id}`: Update product details.
+
+- **Order API**
+  - POST `/pedidos/`: Create a new order.
+  - GET `/pedidos/{id}`: Retrieve an order by ID.
+
+---
+
+

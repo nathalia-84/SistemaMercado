@@ -2,83 +2,56 @@ package br.ufrn.imd.sistemamercado.controllers;
 
 import br.ufrn.imd.sistemamercado.dto.ClienteDTO;
 import br.ufrn.imd.sistemamercado.model.ClienteEntity;
-import br.ufrn.imd.sistemamercado.repositories.ClienteRepository;
-import org.springframework.beans.BeanUtils;
+import br.ufrn.imd.sistemamercado.services.ClienteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5500")
 @RequestMapping("/clientes")
 public class ClienteController {
 
     @Autowired
-    ClienteRepository clienteRepository;
+    private ClienteService clienteService;
 
     @GetMapping("/")
-    public ResponseEntity<Object> getAll() {
-        List<ClienteEntity> clientes = clienteRepository.findByAtivoTrue();
-        return ResponseEntity.status(HttpStatus.OK).body(clientes);
+    public ResponseEntity<List<ClienteEntity>> getAll() {
+        List<ClienteEntity> clientes = clienteService.getAllAtivos();
+        return ResponseEntity.ok(clientes);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getById(@PathVariable Long id){
-        Optional<ClienteEntity> cliente = clienteRepository.findByIdAndAtivoTrue(id);
-        if(cliente.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(cliente.get());
+    public ResponseEntity<ClienteEntity> getById(@PathVariable Long id) {
+        ClienteEntity cliente = clienteService.getByIdAtivo(id);
+        return ResponseEntity.ok(cliente);
     }
 
     @PostMapping("/")
-    public ResponseEntity<ClienteEntity> postCliente(@RequestBody ClienteDTO clienteDTO){
-        ClienteEntity cliente = new ClienteEntity();
-        BeanUtils.copyProperties(clienteDTO, cliente);
-        cliente.ativar();
-        return ResponseEntity.status(HttpStatus.CREATED).body(clienteRepository.save(cliente));
+    public ResponseEntity<ClienteEntity> postCliente(@Valid @RequestBody ClienteDTO clienteDTO) {
+        ClienteEntity cliente = clienteService.createCliente(clienteDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateCliente(@PathVariable Long id, @RequestBody ClienteDTO clienteDTO) {
-        Optional<ClienteEntity> clienteOptional = clienteRepository.findById(id);
-        if (clienteOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
-        }
-
-        ClienteEntity cliente = clienteOptional.get();
-        cliente.carregarDTO(clienteDTO);
-        clienteRepository.save(cliente);
-
-        return ResponseEntity.status(HttpStatus.OK).body(cliente);
+    public ResponseEntity<ClienteEntity> updateCliente(@PathVariable Long id, @Valid @RequestBody ClienteDTO clienteDTO) {
+        ClienteEntity clienteAtualizado = clienteService.updateCliente(id, clienteDTO);
+        return ResponseEntity.ok(clienteAtualizado);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteCliente(@PathVariable Long id) {
-        Optional<ClienteEntity> clienteOptional = clienteRepository.findById(id);
-        if (clienteOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
-        }
-
-        clienteRepository.deleteById(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Cliente deletado com sucesso");
+    public ResponseEntity<String> deleteCliente(@PathVariable Long id) {
+        clienteService.deleteCliente(id);
+        return ResponseEntity.ok("Cliente deletado com sucesso.");
     }
 
     @DeleteMapping("/dl/{id}")
-    public ResponseEntity<Object> deleteLogic(@PathVariable Long id) {
-        Optional<ClienteEntity> clienteOptional = clienteRepository.findById(id);
-        if (clienteOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
-        }
-
-        ClienteEntity cliente = clienteOptional.get();
-        cliente.desativar();
-        clienteRepository.save(cliente);
-
-        return ResponseEntity.status(HttpStatus.OK).body("Cliente desativado logicamente");
+    public ResponseEntity<String> deleteLogic(@PathVariable Long id) {
+        clienteService.deleteLogicCliente(id);
+        return ResponseEntity.ok("Cliente desativado logicamente.");
     }
 }
+

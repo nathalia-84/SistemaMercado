@@ -33,17 +33,10 @@ public class ClienteEntity {
         this.ativo = false;
     }
 
-    public void carregarDTO(ClienteDTO cliente){
-        if(cliente.nome() != null){
-            this.nome = cliente.nome();
-        } if(cliente.cpf() != null){
-            this.cpf = cliente.cpf();
-        } if (cliente.genero() != null){
-            this.genero = cliente.genero();
-        } if (cliente.dataNascimento() != null){
-            this.dataNascimento = cliente.dataNascimento();
-        }if (cliente.ativo() != null){
-            this.ativo = true;
-        }
+    public void atualizar(ClienteDTO clienteDTO) {
+        this.nome = clienteDTO.nome();
+        this.cpf = clienteDTO.cpf();
+        this.genero = clienteDTO.genero();
+        this.dataNascimento = clienteDTO.dataNascimento();
     }
 }
