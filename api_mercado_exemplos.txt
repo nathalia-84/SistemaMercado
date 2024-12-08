@@ -1,0 +1,135 @@
+### Exemplos de requisições
+
+#### API de Clientes
+
+1. GET http://localhost:8080/clientes/
+   - Corpo da requisição: Nenhum
+   - Resposta: Lista todos os clientes ativos
+
+2. GET http://localhost:8080/clientes/5
+   - Requisição: Nenhum
+   - Resposta: Detalhes do cliente com ID = 5.
+
+3. POST http://localhost:8080/clientes/
+   - Corpo da Requisição:
+     {
+       "nome": "Joana Oliveira",
+       "cpf": "98765432100",
+       "genero": "Feminino",
+       "dataNascimento": "1985-07-20"
+     }
+   - Resposta: Cliente criado.
+
+4. PUT http://localhost:8080/clientes/7
+   - Corpo da Requisição:
+     {
+       "nome": "Joana Souza",
+       "cpf": "98765432100",
+       "genero": "Feminino",
+       "dataNascimento": "1985-07-20"
+     }
+   - Resposta: Detalhes do cliente atualizados.
+
+5. DELETE http://localhost:8080/clientes/1
+   - Requisição: Nenhum
+   - Resposta: "Cliente deletado com sucesso."
+
+6. DELETE http://localhost:8080/clientes/dl/1
+   - Requisição: Nenhum
+   - Resposta: "Cliente desativado logicamente."
+
+#### API de Produtos
+
+1. GET http://localhost:8080/produtos/
+   - Requisição: Nenhum
+   - Resposta: Lista de todos os produtos ativos.
+
+2. GET http://localhost:8080/produtos/10
+   - Requisição: Nenhum
+   - Resposta: Detalhes do produto com ID = 10.
+
+3. POST http://localhost:8080/produtos/
+   - Corpo da Requisição:
+    {
+      "nomeProduto": "Feijão Carioca",
+      "marca": "Urbano",
+      "dataFabricacao": "2024-03-21",
+      "dataValidade": "2025-03-21",
+      "genero": "Alimento",
+      "lote": "L127"
+     }
+   - Resposta: Produto criado recentemente.
+
+4. PUT http://localhost:8080/produtos/16
+   - Corpo da Requisição:
+    {
+      "nomeProduto": "Lentilha",
+      "marca": "Urbano",
+      "dataFabricacao": "2024-03-21",
+      "dataValidade": "2025-03-21",
+      "genero": "Alimento",
+      "lote": "L127"
+     }
+
+   - Resposta: Detalhes do produto atualizados.
+
+5. DELETE http://localhost:8080/produtos/1
+   - Requisição: Nenhum
+   - Resposta: "Produto deletado com sucesso."
+
+6. DELETE http://localhost:8080/produtos/dl/1
+   - Requisição: Nenhum
+   - Resposta: "Produto desativado logicamente."
+
+#### API de Pedidos
+
+1. GET http://localhost:8080/pedidos/
+   - Requisição: Nenhum
+   - Resposta: Lista de todos os pedidos.
+
+2. GET http://localhost:8080/pedidos/1
+   - Requisição: Nenhum
+   - Resposta: Detalhes do pedido com ID = 1.
+
+3. POST http://localhost:8080/pedidos/
+   - Corpo da Requisição:
+    {
+      "codigo": "PEF-004",
+      "clienteId": 5,
+      "produtosId": [10, 12, 13]
+    }
+
+   - Resposta: Pedido criado recentemente.
+
+4. PUT http://localhost:8080/pedidos/5
+   - Corpo da Requisição:
+     {
+      "codigo": "MOQ-004",
+      "clienteId": 5,
+      "produtosId": [10, 12, 13]
+    }
+   - Resposta: Detalhes do pedido atualizados.
+
+5. DELETE http://localhost:8080/pedidos/1
+   - Requisição: Nenhum
+   - Resposta: "O pedido foi deletado com sucesso."
+
+6. DELETE http://localhost:8080/pedidos/dl/1
+   - Requisição: Nenhum
+   - Resposta: "O pedido foi deletado logicamente."
+
+7. POST http://localhost:8080/pedidos/1/produtos/
+   - Corpo da Requisição:
+     {
+      "nomeProduto": "Flocão",
+      "marca": "São Braz",
+      "dataFabricacao": "2024-03-21",
+      "dataValidade": "2025-03-21",
+      "genero": "Alimento",
+      "lote": "L130"
+     }
+   - Resposta: Pedido com produtos atualizados.
+
+8. DELETE http://localhost:8080/pedidos/1/produtos/2
+   - Requisição: Nenhum
+   - Resposta: Pedido com o produto removido.

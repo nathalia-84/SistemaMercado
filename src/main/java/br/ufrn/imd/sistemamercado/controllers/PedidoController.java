@@ -49,7 +49,7 @@ public class PedidoController {
         return ResponseEntity.ok("O pedido foi deletado com sucesso");
     }
 
-    @DeleteMapping("/logic/{id}")
+    @DeleteMapping("/dl/{id}")
     public ResponseEntity<String> deleteLogicPedido(@PathVariable Long id) {
         pedidoService.deleteLogicPedido(id);
         return ResponseEntity.ok("O pedido foi deletado logicamente");

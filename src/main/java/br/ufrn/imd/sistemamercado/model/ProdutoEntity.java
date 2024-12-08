@@ -29,7 +29,7 @@ public class ProdutoEntity {
     String lote;
     Boolean ativo;
 
-    @ManyToMany(mappedBy = "produtos")
+    @ManyToMany(mappedBy = "produtos", cascade = CascadeType.REMOVE)
     @JsonIgnore
     List<PedidoEntity> pedidos;
 
