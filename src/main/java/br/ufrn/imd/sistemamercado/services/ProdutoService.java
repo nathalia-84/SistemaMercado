@@ -2,7 +2,9 @@ package br.ufrn.imd.sistemamercado.services;
 
 import br.ufrn.imd.sistemamercado.dto.ProdutoDTO;
 import br.ufrn.imd.sistemamercado.exceptions.ResourceNotFoundException;
+import br.ufrn.imd.sistemamercado.model.PedidoEntity;
 import br.ufrn.imd.sistemamercado.model.ProdutoEntity;
+import br.ufrn.imd.sistemamercado.repositories.PedidoRepository;
 import br.ufrn.imd.sistemamercado.repositories.ProdutoRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,10 @@ public class ProdutoService {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
+
 
     public List<ProdutoEntity> getAllAtivos() {
         return produtoRepository.findByAtivoTrue();
@@ -42,6 +48,12 @@ public class ProdutoService {
     public void deleteProduto(Long id) {
         ProdutoEntity produtoExistente = produtoRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Produto com ID " + id + " não encontrado."));
+
+        for (PedidoEntity pedido : produtoExistente.getPedidos()) {
+            pedido.getProdutos().remove(produtoExistente);
+            pedidoRepository.save(pedido);
+        }
+
         produtoRepository.delete(produtoExistente);
     }
 
