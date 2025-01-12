@@ -1,5 +1,30 @@
 ### Exemplos de requisições
 
+#### Exemplos de Utilização dos Endpoints `/login` e `/registrar`
+
+1. POST http://localhost:8080/auth/registrar
+- Descrição: Registra um novo usuário no sistema.
+- Corpo da Requisição:
+  {
+    "login": "joana",
+    "password": "senha123",
+    "role": "ADMIN"
+  }
+2. POST http://localhost:8080/auth/login
+- Descrição: Autentica um usuário e retorna um token JWT para acesso aos endpoints protegidos da API.
+- Corpo da Requisição:
+  {
+    "login": "joana",
+    "password": "senha123"
+  }
+
+### Como Utilizar o Token JWT em Requisições Protegidas
+Após realizar o login, utilize o token JWT no Authorization Header das requisições:
+
+Exemplo:
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6ImltZC1tYXJrZXQiLCJleHAiOjE2ODk2OTI4MDB9.YF9SjaEXrZm9LJ8PT4ECPLUZ-5BhKuQ7Q_c3qSZ7d5g
+
+
 #### API de Clientes
 
 1. GET http://localhost:8080/clientes/
