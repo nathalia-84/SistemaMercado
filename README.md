@@ -129,20 +129,24 @@ A configuração de segurança está na classe `SecurityConfiguration`:
 ```java
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration {
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-            .csrf(csrf -> csrf.disable())
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    return http
+            .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                .requestMatchers(HttpMethod.GET, "/produtos").hasAnyRole("ADMIN", "USER")
-                .anyRequest().authenticated()
+            .authorizeHttpRequests(autorize -> autorize
+                    // Endpoints publicos
+                    .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/registrar").permitAll()
+                    // Endpoints restritos a Admin
+                    .requestMatchers(HttpMethod.POST).hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT).hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
+                    // Endpoints GET
+                    .requestMatchers(HttpMethod.GET).hasAnyRole("ADMIN", "USER")
+                    // Todas outras requisições requerem autentificação
+                    .anyRequest().authenticated()
             )
-            .addFilterBefore(new SecurityFilter(), UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
-    }
 }
 ```
 
